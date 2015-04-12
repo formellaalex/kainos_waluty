@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<head>
+			<link rel='stylesheet' href='/Zurb/css/foundation.css' />
+			<link rel='stylesheet' href='stylesheets/style.css' />
+		</head>
+		<style>
+
+		</style>
+	</head>
+	<body>
+		<h1 id="title"> Table of exchange rates</h1>
+		<div class="row">
+			<div class="small-7 small-centered columns">
+				<table>
+				<td> Nazwa waluty </td><td> Kod waluty </td> <td> Średni kurs </td> <td> Minimalny kurs</td> <td> Maksymalny kurs </td>
+				<% for(var i=0;i<waluty.length;i++){ %>
+					<tr>
+					<td> <%= waluty[i].name %> </td><td><a href="/currency/<%= waluty[i].code %>"> <%= waluty[i].code %> </a> </td><td> <%= waluty[i].avg_rate %> </td><td> <%= waluty[i].min_rate %> </td><td> <%= waluty[i].max_rate %> </td>
+					</tr>
+				<%}%>
+				</table>
+			</div>
+		</div>
+		
+	</body>
+</html>

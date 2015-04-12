@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+#title{
+	text-align: center;
+}
+td{
+	text-align: center;
+}
+#wykres{
+	text-align: center;
+}
+#details{
+	text-align: center;
+}
+

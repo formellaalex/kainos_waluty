@@ -1,0 +1,129 @@
+<html>
+	<head>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<link rel='stylesheet' href='/Zurb/css/foundation.css' />
+		<link rel='stylesheet' href='stylesheets/style.css' />
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	</head>
+	<style>
+		
+		path {
+		stroke: red;
+		stroke-width: 2;
+		fill: none;
+		}
+
+		line {
+		    stroke: black;
+		}
+		 .xLabel {
+		text-anchor: middle;
+		}
+
+		.yLabel {
+		    text-anchor: end;
+		}
+		#title{
+			text-align: center;
+		}
+	</style>
+	 <script>
+		  $(function() {
+		    $( ".datepicker" ).datepicker({
+			  dateFormat: "yy-mm-dd"
+			});
+		  });
+  	</script>
+	<body>
+		<h1 id="title"> Details of : <%= nazwa[0].name %> </h1>
+		<div class="row">
+			<div class="small-7 small-centered columns">
+			<div id="wykres"></div>
+			<span style="float: left; margin-left: 10%"> <%= from %> </span>  <span style="float: right"> <%= to %> </span>
+	    	</div>
+	    	
+		</div>
+		<br> <br>
+		<div class="row">
+			<div class="small-3 small-centered columns">
+				<form action="/change_date/<%=nazwa[0].code%>" method="post" style="text-align: center">
+					<input name="from" type="text" class="datepicker" placeholder="From">
+					<input name="to" type="text" class="datepicker" placeholder="To">
+					<button> Display </button> 
+				</form>
+			</div>
+		</div>
+
+	   	<div class="row">
+	   		<div class="small-2 small-centered columns">
+	   			<table>
+				<tr>
+				<td> Data kursu </td> <td> Kurs </td>
+				<% for(var i=0;i<kursy.length; i++){ %>
+				<tr>
+				<td> <%= kursy[i].publication_date.getFullYear() + "-" + (kursy[i].publication_date.getMonth()+1) + "-" + kursy[i].publication_date.getDate() %> </td> <td> <%= kursy[i].rate %> </td>
+				</tr>
+				<%}%> 
+				</tr>
+				</table>
+	   		</div>
+
+
+	   	</div>
+
+	   	<script type="text/javascript">
+	        w = 600;
+			h = 400;
+			margin_x = 62;
+			margin_y = 20;
+
+			var data = [];
+			<% for(var i=0;i<kursy.length;i++){ %>
+				data.push(<%=kursy[i].rate%>);
+			<%}%>
+
+			y = d3.scale.linear().domain([0, d3.max(data)]).range([0 + margin_y, h - margin_y]);
+			x = d3.scale.linear().domain([0, data.length]).range([0 + margin_x, w - margin_x]);
+
+			var svg = d3.select("#wykres")
+			    .append("svg:svg")
+			    .attr("width", w)
+			    .attr("height", h);
+			var g = svg.append("svg:g")
+			    .attr("transform", "translate(0," + h + ")");
+
+
+			var line = d3.svg.line()
+			    .x(function (d, i) { return x(i); })
+			    .y(function (d) { return -1 * y(d); });
+
+			g.append("svg:line")
+			.attr("x1", x(0))
+			.attr("y1", -y(0))
+			.attr("x2", x(w))
+			.attr("y2", -y(0));
+
+			// draw the y axis
+			g.append("svg:line")
+			.attr("x1", x(0))
+			.attr("y1", -y(0))
+			.attr("x2", x(0))
+			.attr("y2", -y(d3.max(data)) - 10);
+			
+			g.append("svg:path").attr("d", line(data));
+			//skala
+
+			g.selectAll(".yLabel") 
+		    .data(y.ticks(5)) 
+		    .enter().append("svg:text") 
+		    .attr("class", "yLabel") 
+		    .text(String) 
+		    .attr("x", 25) 
+		    .attr("y", function (d) { return -y(d) }) 
+		    .attr("text-anchor", "end");
+
+	    </script>
+	    
+	</body>
+</html>

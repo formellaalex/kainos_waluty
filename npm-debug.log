@@ -1,0 +1,146 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'ejs' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose node symlink /usr/bin/node
+5 warn package.json fs@0.0.2 fs is also the name of a node core module.
+6 warn package.json fs@0.0.2 No description
+7 warn package.json fs@0.0.2 No repository field.
+8 warn package.json fs@0.0.2 No README data
+9 warn package.json http@0.0.0 http is also the name of a node core module.
+10 warn package.json http@0.0.0 No description
+11 warn package.json http@0.0.0 No repository field.
+12 warn package.json http@0.0.0 No README data
+13 verbose readDependencies using package.json deps
+14 verbose cache add [ 'ejs', null ]
+15 verbose cache add name=undefined spec="ejs" args=["ejs",null]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'ejs',
+16 verbose parsed url   path: 'ejs',
+16 verbose parsed url   href: 'ejs' }
+17 silly lockFile 75eeca8f-ejs ejs
+18 verbose lock ejs /home/formel/.npm/75eeca8f-ejs.lock
+19 silly lockFile 75eeca8f-ejs ejs
+20 silly lockFile 75eeca8f-ejs ejs
+21 verbose addNamed [ 'ejs', '' ]
+22 verbose addNamed [ null, '*' ]
+23 silly lockFile bcdf6e5f-ejs ejs@
+24 verbose lock ejs@ /home/formel/.npm/bcdf6e5f-ejs.lock
+25 silly addNameRange { name: 'ejs', range: '*', hasData: false }
+26 verbose request where is /ejs
+27 verbose request registry https://registry.npmjs.org/
+28 verbose request id dbf7dbc618c233f6
+29 verbose url raw /ejs
+30 verbose url resolving [ 'https://registry.npmjs.org/', './ejs' ]
+31 verbose url resolved https://registry.npmjs.org/ejs
+32 verbose request where is https://registry.npmjs.org/ejs
+33 info trying registry request attempt 1 at 13:10:30
+34 verbose etag "DFS9PA0D97GJNWG4SMGBGXXH0"
+35 http GET https://registry.npmjs.org/ejs
+36 http 200 https://registry.npmjs.org/ejs
+37 silly registry.get cb [ 200,
+37 silly registry.get   { date: 'Sat, 11 Apr 2015 11:10:32 GMT',
+37 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+37 silly registry.get     etag: '"46IEDUAIH1Q2CB43KJM06JOGZ"',
+37 silly registry.get     'content-type': 'application/json',
+37 silly registry.get     'cache-control': 'max-age=60',
+37 silly registry.get     'content-length': '45016',
+37 silly registry.get     'accept-ranges': 'bytes',
+37 silly registry.get     via: '1.1 varnish',
+37 silly registry.get     age: '0',
+37 silly registry.get     'x-served-by': 'cache-fra1223-FRA',
+37 silly registry.get     'x-cache': 'HIT',
+37 silly registry.get     'x-cache-hits': '1',
+37 silly registry.get     'x-timer': 'S1428750632.232569,VS0,VE709',
+37 silly registry.get     vary: 'Accept',
+37 silly registry.get     'keep-alive': 'timeout=10, max=50',
+37 silly registry.get     connection: 'Keep-Alive' } ]
+38 silly addNameRange number 2 { name: 'ejs', range: '*', hasData: true }
+39 silly addNameRange versions [ 'ejs',
+39 silly addNameRange   [ '0.0.1',
+39 silly addNameRange     '0.0.2',
+39 silly addNameRange     '0.0.3',
+39 silly addNameRange     '0.0.4',
+39 silly addNameRange     '0.1.0',
+39 silly addNameRange     '0.2.0',
+39 silly addNameRange     '0.2.1',
+39 silly addNameRange     '0.3.0',
+39 silly addNameRange     '0.3.1',
+39 silly addNameRange     '0.4.0',
+39 silly addNameRange     '0.4.1',
+39 silly addNameRange     '0.4.2',
+39 silly addNameRange     '0.4.3',
+39 silly addNameRange     '0.5.0',
+39 silly addNameRange     '0.6.0',
+39 silly addNameRange     '0.6.1',
+39 silly addNameRange     '0.7.0',
+39 silly addNameRange     '0.7.1',
+39 silly addNameRange     '0.7.2',
+39 silly addNameRange     '0.8.0',
+39 silly addNameRange     '0.8.1',
+39 silly addNameRange     '0.8.2',
+39 silly addNameRange     '0.8.3',
+39 silly addNameRange     '0.8.4',
+39 silly addNameRange     '0.8.5',
+39 silly addNameRange     '0.8.6',
+39 silly addNameRange     '0.8.8',
+39 silly addNameRange     '1.0.0',
+39 silly addNameRange     '2.0.2',
+39 silly addNameRange     '2.0.3',
+39 silly addNameRange     '2.0.4',
+39 silly addNameRange     '2.0.5',
+39 silly addNameRange     '2.0.6',
+39 silly addNameRange     '2.0.7',
+39 silly addNameRange     '2.0.8',
+39 silly addNameRange     '2.1.1',
+39 silly addNameRange     '2.1.2',
+39 silly addNameRange     '2.1.3',
+39 silly addNameRange     '2.1.4',
+39 silly addNameRange     '2.2.1',
+39 silly addNameRange     '2.2.2',
+39 silly addNameRange     '2.2.3',
+39 silly addNameRange     '2.2.4',
+39 silly addNameRange     '2.3.1' ] ]
+40 verbose addNamed [ 'ejs', '2.3.1' ]
+41 verbose addNamed [ '2.3.1', '2.3.1' ]
+42 silly lockFile 823d5f08-ejs-2-3-1 ejs@2.3.1
+43 verbose lock ejs@2.3.1 /home/formel/.npm/823d5f08-ejs-2-3-1.lock
+44 silly lockFile f5dbddfd-stry-npmjs-org-ejs-ejs-2-3-1-tgz https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+45 verbose lock https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz /home/formel/.npm/f5dbddfd-stry-npmjs-org-ejs-ejs-2-3-1-tgz.lock
+46 verbose addRemoteTarball [ 'https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz',
+46 verbose addRemoteTarball   'a697d98ac401e32a99c3deed92c60c19b6199a7f' ]
+47 info retry fetch attempt 1 at 13:10:33
+48 verbose fetch to= /tmp/npm-15655-dawSXe4B/registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+49 http GET https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+50 http 200 https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+51 silly lockFile f5dbddfd-stry-npmjs-org-ejs-ejs-2-3-1-tgz https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+52 silly lockFile f5dbddfd-stry-npmjs-org-ejs-ejs-2-3-1-tgz https://registry.npmjs.org/ejs/-/ejs-2.3.1.tgz
+53 silly lockFile 823d5f08-ejs-2-3-1 ejs@2.3.1
+54 silly lockFile 823d5f08-ejs-2-3-1 ejs@2.3.1
+55 silly lockFile bcdf6e5f-ejs ejs@
+56 silly lockFile bcdf6e5f-ejs ejs@
+57 error Error: EACCES, mkdir '/home/formel/.npm/ejs/2.3.1'
+57 error  { [Error: EACCES, mkdir '/home/formel/.npm/ejs/2.3.1']
+57 error   errno: 3,
+57 error   code: 'EACCES',
+57 error   path: '/home/formel/.npm/ejs/2.3.1',
+57 error   parent: 'Kainos_waluty' }
+58 error Please try running this command again as root/Administrator.
+59 error System Linux 3.13.0-44-generic
+60 error command "/usr/bin/node" "/usr/bin/npm" "install" "ejs"
+61 error cwd /home/formel/Kainos_waluty
+62 error node -v v0.10.35
+63 error npm -v 1.4.28
+64 error path /home/formel/.npm/ejs/2.3.1
+65 error code EACCES
+66 error errno 3
+67 error stack Error: EACCES, mkdir '/home/formel/.npm/ejs/2.3.1'
+68 verbose exit [ 3, true ]
