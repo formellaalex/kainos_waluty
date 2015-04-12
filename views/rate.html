@@ -2,36 +2,10 @@
 	<head>
 		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 		<link rel='stylesheet' href='/Zurb/css/foundation.css' />
-		<link rel='stylesheet' href='stylesheets/style.css' />
+		<link rel='stylesheet' href='/stylesheets/style.css' />
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
   		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	</head>
-	<style>
-		
-		path {
-		stroke: red;
-		stroke-width: 2;
-		fill: none;
-		}
-
-		line {
-		    stroke: black;
-		}
-		 .xLabel {
-		text-anchor: middle;
-		}
-
-		.yLabel {
-		    text-anchor: end;
-		}
-		#title{
-			text-align: center;
-		}
-		#back_to_main{
-			color: #DA1F2C;
-		}
-
-	</style>
 	 <script>
 		  $(function() {
 		    $( ".datepicker" ).datepicker({
@@ -45,7 +19,7 @@
 		<div class="row">
 			<div class="small-7 small-centered columns">
 			<div id="wykres"></div>
-			<span style="float: left; margin-left: 10%"> <%= from %> </span>  <span style="float: right"> <%= to %> </span>
+			<span style="float: left; margin-left: 10%"> <%= from %> </span>  <span style="float: right;margin-right: 10%"> <%= to %> </span>
 	    	</div>
 	    	
 		</div>
@@ -57,22 +31,21 @@
 					<input name="to" type="text" class="datepicker" placeholder="To">
 					<button> Display </button> 
 				</form>
-			</div>
-		</div>
-
-	   	<div class="row">
-	   		<div class="small-2 small-centered columns">
-	   			<table>
-				<tr>
-				<td> Data kursu </td> <td> Kurs </td>
-				<% for(var i=0;i<kursy.length; i++){ %>
-				<tr>
-				<td> <%= kursy[i].publication_date.getFullYear() + "-" + (kursy[i].publication_date.getMonth()+1) + "-" + kursy[i].publication_date.getDate() %> </td> <td> <%= kursy[i].rate %> </td>
-				</tr>
-				<%}%> 
-				</tr>
+				<div class="small-8 small-centered columns">
+				<table>
+					<tr>
+					<td> Data kursu </td> <td> Kurs </td>
+					<% for(var i=0;i<kursy.length; i++){ %>
+					<tr>
+					<td> <%= kursy[i].publication_date.getFullYear() + "-" + (kursy[i].publication_date.getMonth()+1) + "-" + kursy[i].publication_date.getDate() %> </td> <td> <%= kursy[i].rate %> </td>
+					</tr>
+					<%}%> 
+					</tr>
 				</table>
-	   		</div>
+				</div>
+			</div>
+
+		</div>
 
 
 	   	</div>

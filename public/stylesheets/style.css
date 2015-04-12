@@ -2,3 +2,25 @@
 #wykres,#details, #title,td{
 	text-align: center;
 }
+
+	
+path {
+stroke: red;
+stroke-width: 2;
+fill: none;
+}
+
+line {
+    stroke: black;
+}
+ .xLabel {
+text-anchor: middle;
+}
+
+.yLabel {
+    text-anchor: end;
+}
+
+#back_to_main{
+	color: #DA1F2C;
+}

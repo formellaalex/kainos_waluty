@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
 
 router.get('/currency/:currencyCode', function(req,res){
 
-	if(req.query.from == null || req.query.to == null){
+	if(req.query.from == null || req.query.to == null || req.query.to == "" || req.query.to == ""){
 		from = '2007-01-31';
 		to = '2014-12-31';
 	}
