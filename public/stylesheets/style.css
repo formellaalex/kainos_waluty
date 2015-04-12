@@ -1,22 +1,4 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-  color: #00B7FF;
-}
-
-#title{
+#wykres,#details, #title,td{
 	text-align: center;
 }
-td{
-	text-align: center;
-}
-#wykres{
-	text-align: center;
-}
-#details{
-	text-align: center;
-}
-
