@@ -37,7 +37,7 @@ router.get('/', function(req, res) {
 					cnt++;
 				}
 				numbers.push(result.substring((cnt-2)*13, (cnt-2)*13+13));
-				for(var i=1;i<numbers.length-1;i++){
+				for(var i=1;i<numbers.length;i++){
 					getCurrency('/kursy/xml/a'+ numbers[i].substring(2,12) +'.xml',function(result){
 						
 						var insert = 'INSERT INTO kursy VALUES';
@@ -58,8 +58,10 @@ router.get('/', function(req, res) {
 				}
 				
 			});
-		res.redirect("/");
-		}
+		connection.query("SELECT name, waluty.code, max(rate) as max_rate, min(rate) as min_rate, avg(rate) as avg_rate FROM waluty, kursy WHERE waluty.code = kursy.code GROUP BY code ORDER BY name ASC;", function(err, waluty){
+			res.render('index.html',{waluty:waluty});
+		});
+	}
 		else{
 			if(err) console.log(err);
 			res.render('index.html',{waluty:waluty});
@@ -72,7 +74,7 @@ router.get('/currency/:currencyCode', function(req,res){
 
 	if(req.query.from == null || req.query.to == null || req.query.to == "" || req.query.to == ""){
 		from = '2007-01-31';
-		to = '2014-12-31';
+		to = '2015-01-01';
 	}
 	else{
 		from =req.query.from;
