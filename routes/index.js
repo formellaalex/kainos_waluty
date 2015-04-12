@@ -97,29 +97,7 @@ router.get('/currency/:currencyCode', function(req,res){
 		}
 	});
 });
-/*
-router.get("/change_date/:currencyCode/:from/:to", function(req,res){
-	connection.query("SELECT name,code FROM waluty where code='" + req.params.currencyCode + "';",function(err,nazwa){
-		if(err){
-			console.log(err);
-			res.redirect("/");
-		}
-		else{
-			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + req.params.from + "' AND '"+ req.params.to +"';", function(err, kursy){
-				if(err){
-					console.log(err);
-					res.redirect("/");
-				}
-				else{
-					res.render("rate.html", {kursy: kursy, nazwa: nazwa, from: from, to: to});
-				}
-			});
-		}
-	});
-})
 
-
-*/
 function getCurrency(_path,callback) {
 
     http.get({
