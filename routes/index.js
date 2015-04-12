@@ -84,7 +84,7 @@ router.get('/currency/:currencyCode', function(req,res){
 			res.redirect("/");
 		}
 		else{
-			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + from + "' AND '" + to + "' ;", function(err, kursy){
+			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + from + "' AND '" + to + "' ORDER BY publication_date DESC;", function(err, kursy){
 				if(err){
 					console.log(err);
 					res.redirect("/");
