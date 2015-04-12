@@ -3,7 +3,7 @@ var router = express.Router();
 var wynik;
 var parseString = require('xml2js').parseString;
 var http = require('http');
-var from, to;
+var from,to;
 function minTwoDigits(n) {
   return (n < 10 ? '0' : '') + n;
 }
@@ -70,9 +70,13 @@ router.get('/', function(req, res) {
 
 router.get('/currency/:currencyCode', function(req,res){
 
-	if(req.body.from == null || req.body.to == null){
-		from = '2007-01-01';
+	if(req.query.from == null || req.query.to == null){
+		from = '2007-01-31';
 		to = '2014-12-31';
+	}
+	else{
+		from =req.query.from;
+		to = req.query.to;
 	}
 	connection.query("SELECT name,code FROM waluty where code='" + req.params.currencyCode + "';",function(err,nazwa){
 		if(err){
@@ -80,7 +84,28 @@ router.get('/currency/:currencyCode', function(req,res){
 			res.redirect("/");
 		}
 		else{
-			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + from + "' AND '"+ to +"';", function(err, kursy){
+			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + from + "' AND '" + to + "' ;", function(err, kursy){
+				if(err){
+					console.log(err);
+					res.redirect("/");
+				}
+				else{
+					console.log(req.query.from);
+					res.render("rate.html", {kursy: kursy, nazwa: nazwa, from: from, to: to});
+				}
+			});
+		}
+	});
+});
+/*
+router.get("/change_date/:currencyCode/:from/:to", function(req,res){
+	connection.query("SELECT name,code FROM waluty where code='" + req.params.currencyCode + "';",function(err,nazwa){
+		if(err){
+			console.log(err);
+			res.redirect("/");
+		}
+		else{
+			connection.query("SELECT publication_date, rate FROM kursy WHERE kursy.code = '" + req.params.currencyCode + "' AND publication_date between '" + req.params.from + "' AND '"+ req.params.to +"';", function(err, kursy){
 				if(err){
 					console.log(err);
 					res.redirect("/");
@@ -91,14 +116,10 @@ router.get('/currency/:currencyCode', function(req,res){
 			});
 		}
 	});
-});
-
-router.post("/change_date/:currencyCode", function(req,res){
-	from = req.body.from;
-	to = req.body.to;
-	res.redirect("/currency/" + req.params.currencyCode);
 })
 
+
+*/
 function getCurrency(_path,callback) {
 
     http.get({
