@@ -6,7 +6,7 @@
 
 ####Tworzenie tabeli "waluty":
 
-	create table waluty(id int auto_increment NOT NULL, code varchar(3) NOT NULL, name varchar(20) NOT NULL,PRIMARY KEY(code))ENGINE=InnoDB;
+	create table waluty(code varchar(3) NOT NULL, name varchar(20) NOT NULL,PRIMARY KEY(code))ENGINE=InnoDB;
 
 ####Tworzenie tabeli "kursy":
 
