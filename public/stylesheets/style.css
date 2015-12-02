@@ -1,6 +1,9 @@
-
+body{
+	background: #5D5D5D !important;
+}
 #wykres,#details, #title,td{
 	text-align: center;
+	color: white;
 }
 
 	

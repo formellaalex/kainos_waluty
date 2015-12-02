@@ -1,72 +1,34 @@
 var express = require('express');
 var router = express.Router();
-var wynik;
 var parseString = require('xml2js').parseString;
 var http = require('http');
 var from,to;
-function minTwoDigits(n) {
-  return (n < 10 ? '0' : '') + n;
-}
 
-router.get('/', function(req, res) {
+router.get('/', function(req, response) {
+
 	connection.query("SELECT name, waluty.code, max(rate) as max_rate, min(rate) as min_rate, avg(rate) as avg_rate FROM waluty, kursy WHERE waluty.code = kursy.code GROUP BY code ORDER BY name ASC;", function(err, waluty){
 		if(waluty.length == 0){
-			var nr = 22;
-			var path;
 			var numbers = [];
-			var cnt = 0;
 			getVariablesNBP(function(result){
-				while(result.substring(cnt*13, cnt*13+13)[7] != 7){
-					cnt++;
-				}
-				for(var i=0;i<=7;i++){
-					for(var j=1;j<=12;j++){
-						while(result.substring(cnt*13, cnt*13+13).substring(8,10) != minTwoDigits(j)){
-							cnt++;
+				for(var i=0;i<result.length;i++){
+					if(result[i][0] == "b"){
+						var temp = "";
+						for(var j=i;j<i+11;j++){
+							temp += result[j];
 						}
-						if(result.substring((cnt-1)*13, (cnt-1)*13+13).substring(1,2) == "b"){
-							numbers.push(result.substring((cnt-2)*13, (cnt-2)*13+13));
-						}
-						else{
-							numbers.push(result.substring((cnt-1)*13, (cnt-1)*13+13));
-						}
-						cnt++;
+						numbers.push(temp);
+						i += 10;
 					}
-				}
-				while(result.substring(cnt*13, cnt*13+13).substring(8,10) != '01'){
-					cnt++;
-				}
-				numbers.push(result.substring((cnt-2)*13, (cnt-2)*13+13));
-				for(var i=1;i<numbers.length;i++){
-					getCurrency('/kursy/xml/a'+ numbers[i].substring(2,12) +'.xml',function(result){
-						
-						var insert = 'INSERT INTO kursy VALUES';
-						for(var j=0;j<result.tabela_kursow.pozycja.length;j++){
-							var kurs = result.tabela_kursow.pozycja[j].kurs_sredni.toString();
-							kurs = kurs.replace(',', '.');
-							insert += "('" + result.tabela_kursow.pozycja[j].kod_waluty + "'," + kurs + ",'" + result.tabela_kursow.data_publikacji + "'),";
-							if(result.tabela_kursow.pozycja[j].kod_waluty == "LVL"){
-								console.log(result.tabela_kursow.pozycja[j].kod_waluty);
+			}
 
-							}
-						}
-						connection.query( insert.substring(0,insert.length-1), function(err,result){
-							if(err) console.log(err);
-						});
-						
-					});
-				}
-				
-			});
-		connection.query("SELECT name, waluty.code, max(rate) as max_rate, min(rate) as min_rate, avg(rate) as avg_rate FROM waluty, kursy WHERE waluty.code = kursy.code GROUP BY code ORDER BY name ASC;", function(err, waluty){
-			res.render('index.html',{waluty:waluty});
+			console.log(numbers.length);
+			takeNumbers(0,numbers,response);
+	
 		});
 	}
-		else{
-			if(err) console.log(err);
-			res.render('index.html',{waluty:waluty});
-		}
-		
+	else{
+		response.render('index.html',{waluty: waluty});
+	}
 	});
 });
 
@@ -74,7 +36,7 @@ router.get('/currency/:currencyCode', function(req,res){
 
 	if(req.query.from == null || req.query.to == null || req.query.to == "" || req.query.to == ""){
 		from = '2007-01-31';
-		to = '2015-01-01';
+		to = new Date().toJSON().slice(0,10);
 	}
 	else{
 		from =req.query.from;
@@ -99,6 +61,62 @@ router.get('/currency/:currencyCode', function(req,res){
 		}
 	});
 });
+
+
+function takeNumbers(i, numbers,response){
+	if(i < numbers.length){
+		getCurrency('/kursy/xml/'+ numbers[i] +'.xml',function(kursy){
+
+			saver(0,kursy.tabela_kursow);
+			
+
+		});
+		takeNumbers(i+1, numbers,response)
+	}
+	else{
+		console.log("END OF NUMBERS" + "  " + numbers.length);
+		// connection.query("SELECT name, waluty.code, max(rate) as max_rate, min(rate) as min_rate, avg(rate) as avg_rate FROM waluty, kursy WHERE waluty.code = kursy.code GROUP BY code ORDER BY name ASC;", function(err, waluty){
+		// 	response.render('index.html',{waluty: waluty});
+		// });
+	}
+}
+
+
+function saver(i, kursy) {
+  if( i < kursy.pozycja.length ) {
+	insertCurrency(kursy.pozycja[i].kod_waluty,kursy.pozycja[i].nazwa_waluty, function(err,res){
+		if (err) console.log("Error when inserting rates;");
+	});
+	var kurs = kursy.pozycja[i].kurs_sredni.toString();
+	kurs = kurs.replace(',', '.');
+	console.log(i);
+	connection.query("INSERT INTO KURSY VALUES("+connection.escape(kursy.pozycja[i].kod_waluty) + "," + connection.escape(kurs) + "," + connection.escape(kursy.data_publikacji)+ ");", function(err,res){
+		if(err) console.log("Błąd przy insercie kursu: " + err);
+	});
+	saver(i+1,kursy);
+  }
+}
+
+
+function insertCurrency(code, name,callback){
+	connection.query("INSERT INTO waluty VALUES(" + connection.escape(code) + "," + connection.escape(name) + ");",function(err,res){
+		return callback(res);
+	});
+}
+
+
+function checkCurrency(code, name){
+	connection.query("SELECT code from waluty where code='" + connection.escape(code) + "';", function(err, result){
+		if(err){
+			console.log(err);
+		}
+		else{
+			if(result == 0){
+				insertCurrency(code,name);
+			} 
+		}
+	});
+}
 
 function getCurrency(_path,callback) {
 
@@ -137,12 +155,12 @@ function getVariablesNBP(callback){
         
     }, function(response) {
         // Continuously update stream with data
-        var wynik = '';
+        var wynik = "";
         response.on('data', function(pozycje) {
             wynik += pozycje;
+
         });
         response.on('end', function() {
-
             return callback(wynik);
             
         });
